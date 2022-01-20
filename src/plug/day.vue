@@ -1,6 +1,6 @@
 <template>
   <div class="day">
-    <div>允许的通配符[,- * ? / L W C]</div>
+    <div style="text-align: left">允许的通配符[,- * ? / L W C]</div>
     <template v-if="mode === 9">
       <span style="color: #f5222d">表达式反解析有误</span>
     </template>
