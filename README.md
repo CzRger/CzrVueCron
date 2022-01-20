@@ -2,17 +2,29 @@
 
 npm install czr-vue-cron
 
+![Image text](https://gitee.com/CzRger/CzrVueCron/raw/master/src/assets/img_1.png)
+
 ## 引入
+```vue
+<template>
+  <div id="app">
+    cron表达式：<input v-model="cronVal"/>
+    <CzrVueCron :cron.sync="cronVal"/>
+  </div>
+</template>
 
-``` bash
-# install dependencies
-npm install
+<script>
+import CzrVueCron from 'czr-vue-cron'
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
+export default {
+  components: {
+    CzrVueCron
+  },
+  data() {
+    return {
+      cronVal: ''
+    }
+  }
+}
+</script>
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
