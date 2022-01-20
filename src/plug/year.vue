@@ -1,6 +1,6 @@
 <template>
   <div class="year">
-    允许的通配符[, - * /]，非必填
+    <div>允许的通配符[, - * /]，非必填</div>
     <template v-if="mode === 9">
       <span style="color: #f5222d">表达式反解析有误</span>
     </template>

@@ -1,8 +1,8 @@
 # czr-vue-cron
 
-> A Vue.js project
+npm install czr-vue-cron
 
-## Build Setup
+## 引入
 
 ``` bash
 # install dependencies
