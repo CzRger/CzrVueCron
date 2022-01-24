@@ -1,9 +1,9 @@
 <template>
   <div class="week">
-    <div style="text-align: left">允许的通配符[, - * ? / L C #]</div>
     <template v-if="mode === 9">
       <span style="color: #f5222d">表达式反解析有误</span>
     </template>
+    <div style="text-align: left">允许的通配符[, - * ? / L C #]</div>
     <div class="item">
       <div class="radio" :class="{active: mode === 1}" @click="mode = 1">
         <div class="r-block"/>

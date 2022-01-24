@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     Cron表达式: <input v-model="cronVal"/>
-    <CzrCron :cron.sync="cronVal"/>
+    <CzrCron :cron.sync="cronVal" :recent="[5, 5]"/>
   </div>
 </template>
 

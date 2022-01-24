@@ -9,7 +9,7 @@ npm install czr-vue-cron
 <template>
   <div id="app">
     cron表达式：<input v-model="cronVal"/>
-    <CzrVueCron :cron.sync="cronVal"/>
+    <CzrVueCron :cron.sync="cronVal" :recent="[5, 5]"/>
   </div>
 </template>
 
@@ -28,7 +28,14 @@ export default {
 }
 </script>
 ```
-
+## 参数
+```
+cron：表达式参数
+recent(非必传)：
+    [last, will]
+    last-过去运行次数
+    will-未来运行次数
+```
 ## 问题
 ```
 如有问题请联系：526948392@qq.com

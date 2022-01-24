@@ -19,6 +19,16 @@
       <weekCom :val.sync="weekVal" v-show="mode === 6" @reset="v => dayVal = v"/>
       <yearCom :val.sync="yearVal" v-show="mode === 7"/>
     </div>
+    <div class="recent" v-if="recent.length === 2">
+      <div class="last">
+        <p class="title">过去{{recent[0]}}次运行情况</p>
+        <p v-for="item in recentRunLast" :key="item.index">{{item}}</p>
+      </div>
+      <div class="will">
+        <p class="title">未来{{recent[1]}}次运行情况</p>
+        <p v-for="item in recentRunWill" :key="item.index">{{item}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,12 +40,16 @@
   import monthCom from './month'
   import weekCom from './week'
   import yearCom from './year'
+  import CronParser from 'cron-parser'
 
   export default {
     name: 'CzrVueCron',
     components: { secondsCom, minuteCom, hourCom, dayCom, monthCom, weekCom, yearCom },
     props: {
-      cron: {}
+      cron: {},
+      recent: {
+        default: () => []
+      }
     },
     data() {
       return {
@@ -47,6 +61,8 @@
         monthVal: '',
         weekVal: '',
         yearVal: '',
+        recentRunLast: [],
+        recentRunWill: []
       }
     },
     computed: {
@@ -57,6 +73,22 @@
     watch: {
       cronVal(n) {
         this.$emit('update:cron', n)
+        try {
+          if (this.recent.length === 2) {
+            this.recentRunLast = []
+            this.recentRunWill = []
+            let interval = CronParser.parseExpression(n)
+            for (let i = 0; i < this.recent[0]; i++) {
+              this.recentRunLast.push(this.format(interval.prev()))
+            }
+            this.recentRunLast.reverse()
+            interval = CronParser.parseExpression(n)
+            for (let i = 0; i < this.recent[1]; i++) {
+              this.recentRunWill.push(this.format(interval.next()))
+            }
+          }
+        } catch (e) {
+        }
       }
     },
     mounted() {
@@ -98,7 +130,16 @@
           this.weekVal = '?'
           this.year = ''
         }
-      }
+      },
+      complementZero(val) {
+        if ((val + '').length < 2) {
+          return '0' + val
+        }
+        return val
+      },
+      format(date) {
+        return date.getFullYear() + '-' + this.complementZero((date.getMonth() + 1)) + '-' + this.complementZero(date.getDate()) + ' ' + this.complementZero(date.getHours()) + ':' + this.complementZero(date.getMinutes()) + ':' + this.complementZero(date.getSeconds())
+      },
     }
   }
 </script>
@@ -143,6 +184,12 @@
           background-color: $tabBackgroundColor;
           opacity: 0.9;
         }
+      }
+    }
+    .recent {
+      display: flex;
+      .will {
+        margin-left: 40px;
       }
     }
   }
